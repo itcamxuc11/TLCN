@@ -2,8 +2,7 @@ package com.example.myapplication.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.media.MediaPlayer;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,29 +12,33 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.example.myapplication.R;
 import com.example.myapplication.model.Word;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class SearchResultAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
     private List<Word> list;
-    TextToSpeech textToSpeech;
+    private TextToSpeech textToSpeech;
     public SearchResultAdapter(Context context, int layout, List<Word> list) {
         this.context = context;
         this.layout = layout;
         this.list = list;
         Log.e("aaa", String.valueOf(list.size()));
-        /*textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+        textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-
+                textToSpeech.setLanguage(Locale.US);
             }
         });
-        */
+
     }
 
     @Override
@@ -79,26 +82,18 @@ public class SearchResultAdapter extends BaseAdapter {
         txtExamTrans.setText(word.getExample_translation());
 
         btnSpeaker.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                playSound(word.getVocabulary()+".mp3");
+                playSound(word.getVocabulary());
             }
         });
         return  convertView;
     }
 
-    private void playSound(String fileName) {
-        MediaPlayer p = new MediaPlayer();
-        try {
-            Context ctx = context;
-            AssetFileDescriptor afd = ctx.getAssets().openFd(fileName);
-            p.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            afd.close();
-            p.prepare();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        p.start();
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void playSound(String word){
+        String utteranceId = UUID.randomUUID().toString();
+        textToSpeech.speak(word,TextToSpeech.QUEUE_FLUSH,null,utteranceId);
     }
-
 }
