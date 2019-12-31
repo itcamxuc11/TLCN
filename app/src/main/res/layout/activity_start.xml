@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
             android:onClick="onDailyWord"
-            app:srcCompat="@mipmap/history"
+            android:src="@drawable/new_word"
            ></ImageButton>
 
         <ImageButton
@@ -72,6 +72,16 @@
 
             ></ImageButton>
 
+        <ImageButton
+            android:background="#FFFFFF"
+            android:layout_weight="1"
+            android:id="@+id/button5"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/alarm_icon"
+            android:onClick="onAlarm"
+            ></ImageButton>
 
 
     </LinearLayout>

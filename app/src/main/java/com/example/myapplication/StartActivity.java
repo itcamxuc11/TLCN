@@ -1,12 +1,12 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.Fragment.FragmentSearchActivity;
 
@@ -38,6 +38,11 @@ public class StartActivity extends AppCompatActivity {
     }
     public void onDailyWord(View view){
         Intent intent = new Intent(StartActivity.this, DaillyWordActivity.class);
+        startActivity(intent);
+    }
+
+    public void onAlarm(View view){
+        Intent intent = new Intent(StartActivity.this, AlarmActivity.class);
         startActivity(intent);
     }
 }
